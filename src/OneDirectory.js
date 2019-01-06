@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import OneItem from './OneItem';
 
 export default class OneDirectory extends Component {
     state = {
-        fileObj: [],
+        fileArr: [],
         path: '/',
         display: 'none'
     }
@@ -25,8 +25,8 @@ export default class OneDirectory extends Component {
             
             if (response.ok) {
                 let resJson = await response.json()
-                console.log('resJSON: ', resJson);
-                this.setState({fileObj:resJson})
+                // console.log('resJSON...: ', resJson);
+                await this.setState({fileArr:resJson})    
                 return resJson;
             } else {
                 console.log('error in fetch in getData')
@@ -55,24 +55,12 @@ export default class OneDirectory extends Component {
     }
 
     render() {
-        let {fileObj} = this.state;
-        // console.log("fileObj:", fileObj["Apps"],fileObj)
-        let fileArr = Object.entries(fileObj)
+        let {fileArr} = this.state;
         return(
             <div> 
-                {/* {elem[1].fullpath} */}
                 {fileArr.map((elem, i) => {
                     return (  
-                        <div key={i} >
-                            <div style = {elem[1].isDir ? styles.itemDir :styles.itemFile}>
-                                <button style = {elem[1].isDir ? styles.iconVis: styles.iconHid}><FontAwesomeIcon icon="folder" 
-                                    onClick={this.getSubDir} /> </button> 
-                                {elem[0]} 
-                            </div> 
-                            <div id = "subDir" style = {{...styles.subDir , ...{display:this.state.display}}}>
-
-                            </div>
-                        </div>
+                        <OneItem key = {i} item = {elem} />
                     )
                 }
                 )}
@@ -81,44 +69,4 @@ export default class OneDirectory extends Component {
     }
     
     
-}
-let styles = {
-    itemDir:{
-        color: "blue",
-        fontSize: '16px',
-        margin: 0,
-        marginLeft: 20
-    },
-    itemFile:{
-        color: "black",
-        fontSize: '16px',
-        margin: 0,
-        marginLeft: 20
-    },
-
-    iconHid: {
-        visibility: "hidden",
-        marginRight: "10px"
-    },
-    iconVis: {
-        visibility: "visible",
-        marginRight: "10px"
-    },
-    title: {
-        margin: 20
-    },
-    pathText: {
-        width: '50%',
-        minWidth: '200px',
-
-    },
-    subDir: {
-        height: '100px',
-        background: 'lightBlue',
-        margin: '10px 30px',
-    },
-    invisible: {
-        display: "none"
-    }
-      
 }

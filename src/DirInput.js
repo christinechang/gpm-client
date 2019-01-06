@@ -32,6 +32,7 @@ let styles = {
     },
     submitButt: {
         width: 100,
+        backgroundColor: '#476daa'
     },
     title: {
         margin: 20,

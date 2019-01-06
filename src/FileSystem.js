@@ -15,13 +15,12 @@ export default class FileSystem extends Component {
         return(
             <div style = {styles.container}> 
                 <DirInput getInputText = {this.getInputText}  />
-                <h2 style = {styles.container}>.....{this.state.thePath} </h2>                {/* get path */}
+                <h2 style = {styles.container}>{this.state.thePath} </h2>                {/* get path */}
                {/* get path */}
                 <OneDirectory path = {this.state.thePath}/>  
             </div>
         );
     }
-    
 }
 let styles = {
     itemDir:{

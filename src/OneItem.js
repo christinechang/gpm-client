@@ -1,78 +1,80 @@
 import React, {Component} from 'react';
+import OneDirectory from './OneDirectory';
+// import FilePreview from 'react-preview-file';
+// import logger from 'logging-library';
+///////////////
+// import FileViewer from 'react-file-viewer';
+// import {CustomErrorComponent} from 'custom-error';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default class OneItem extends Component {
     state = {
         fileObj: [],
         path: '/',
-        display: 'none'
+        display: 'none',
+        hoverStyle: {marginRight: "10px",
+                    backgroundColor: 'white',
+                    border: 0}
     }
-
-//    getData = async (path)=> {
-//        console.log("in getData: URL path = ", path)
-//        let encodedUrl = encodeURIComponent(path); //  decodeURIComponent()
-//        const url = "http://localhost:3010/" + encodedUrl;
-//        console.log("in getData: URL: ",url);
-//         try{
-//             let response = await   //get statement doesn't need any params
-//                 fetch(url, {
-//                     method: 'GET',
-//                     headers: {
-//                         Accept: 'application/json',
-//                         'Content-Type': 'application/json'
-//                     }
-//                 }) 
-            
-//             if (response.ok) {
-//                 let resJson = await response.json()
-//                 console.log('resJSON: ', resJson);
-//                 this.setState({fileObj:resJson})
-//                 return resJson;
-//             } else {
-//                 console.log('error in fetch in getData')
-//             }
-//         }
-//         catch(err) {    //big error - server problem
-//             console.log("Fetch Error - try turning on and off CORS")
-//             alert("in OneDirectory : " + err);
-//         }
-//     }
+    hover = () => {
+        this.setState({hoverStyle:{...styles.buttVis,...{backgroundColor: '#ddf'}}})
+    }
+    noHover = () => {
+        this.setState({hoverStyle:{...styles.buttVis,...{backgroundColor: 'white'}}})
+    }
     getSubDir = () => {
-        console.log("button clicked:", this.state.display);
-        this.setState({display:'block'})
-        // element.removeAttribute("style")
+        let disp = this.state.display === 'none'?'block':'none';
+        this.setState({display:disp});
     }
-    // componentDidMount() {
-    //     this.setState({path:this.props.path},()=>{this.getData(this.props.path);})
-    // }
-    // componentWillReceiveProps() {
-    //     // console.log("=====componentWillReceiveProps",this.props.path);
-
-    //     this.setState({path:this.props.path}, ()=> {
-    //         // console.log("componentWillReceiveProps: state:", this.state.path,"props = ",this.props.path);
-    //         this.getData(this.props.path);
-    //     })
-    // }
-
+    openSubBlock = () => {
+        let disp = this.state.display === 'none'?'block':'none';
+        this.setState({display:disp});
+    }
+    onError(e) {
+        console.log(e, 'error in file-viewer');
+    }
     render() {
-        let {fileObj} = this.state;
-        // console.log("fileObj:", fileObj["Apps"],fileObj)
-        let fileArr = Object.entries(fileObj)
-        return (
-            <div> 
-                <div style = {elem[1].isDir ? styles.itemDir :styles.itemFile}>
-                    <button style = {elem[1].isDir ? styles.iconVis: styles.iconHid}><FontAwesomeIcon icon="folder" 
-                        onClick={this.getSubDir} /> </button> 
-                    {elem[0]} 
-                </div> 
-                <div id = "subDir" style = {{...styles.subDir , ...{display:this.state.display}}}>
+        let item = this.props.item;
+        // let filePrevuPath = new File(['someBase64'], (item.isDir ? '' : item.fullpath));
+        let file = item.fullpath;
+        let type = file.substr(file.lastIndexOf('.')+1);
 
-                </div>
+        return (
+            <div style = {styles.bottom}> 
+                <div style = {item.isDir ? styles.itemDir :styles.itemFile}>
+
+                    <button style = {this.state.hoverStyle} 
+                        onMouseOver={this.hover} onMouseLeave={this.noHover}>
+                            <FontAwesomeIcon icon={item.isDir ? "folder": "file"}  onClick={this.openSubBlock} 
+                            style ={item.isDir ? styles.dirIcon : styles.fileIcon}/> 
+                    </button>
+
+                    {item.name} 
+                </div> 
+
+                {item.isDir ?
+                    <div style = {{...styles.subDir , ...{display:this.state.display}}}>
+                        {this.state.display === 'block' ?  <OneDirectory path = {item.fullpath}/> : ''} 
+                    </div>
+                    :
+                    <div style = {{...styles.filePrevu , ...{display:this.state.display}}}>
+                        {this.state.display === 'block' ?  
+                            <h4>File Preview Here of {file} (type = .{type})</h4>
+                            // <FilePreview file={filePrevuPath}>
+                            //     {(preview) => <img src={preview} />}
+                            // </FilePreview>
+                            ///////////////
+                            // <FileViewer
+                            //     fileType = {type}
+                            //     filePath = {file}
+                            //     errorComponent = {CustomErrorComponent}
+                            //      />
+                        : ''} 
+                    </div>
+                }
             </div>
         )
     }
-    
-    
 }
 let styles = {
     itemDir:{
@@ -87,14 +89,22 @@ let styles = {
         margin: 0,
         marginLeft: 20
     },
-
-    iconHid: {
+    buttHid: {
         visibility: "hidden",
         marginRight: "10px"
     },
-    iconVis: {
+    buttVis: {
         visibility: "visible",
-        marginRight: "10px"
+        marginRight: "10px",
+        backgroundColor: 'white',
+        border: 0,
+    },
+    dirIcon: {
+        color: 'grey'
+    },  
+    fileIcon: {
+        color: '#bbb',
+        margin: '0 1px 0 2px'
     },
     title: {
         margin: 20
@@ -104,12 +114,21 @@ let styles = {
         minWidth: '200px',
     },
     subDir: {
-        height: '100px',
-        background: 'lightBlue',
-        margin: '10px 30px',
+        margin: '10px 60px',
+        borderBottom: '1px solid #eee',
+        // borderRadius: 10
+    },
+    filePrevu: {
+        margin: '10px 60px',
+        height: 200,
+        backgroundColor: "#ddd"
     },
     invisible: {
         display: "none"
-    }
-      
+    },
+    bottom: {
+        paddingBottom: 3,
+        borderBottom: '1px solid #eee',
+    },
+
 }

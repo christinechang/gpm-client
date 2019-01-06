@@ -1,6 +1,7 @@
 import FileSystem from './FileSystem';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faFolder } from '@fortawesome/free-solid-svg-icons'
+import { faFile } from '@fortawesome/free-solid-svg-icons'
 
 import React, { Component } from 'react';
 import {
@@ -10,6 +11,7 @@ import {
 import './App.css';
 ///fontawesome stuff:
 library.add(faFolder)
+library.add(faFile)
 
 export default class App extends Component {
   state = {

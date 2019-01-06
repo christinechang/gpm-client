@@ -1,3 +1,17 @@
+npm packages used:
+
+fontAwesome
+
+<!-- sockjs-client -->
+<!-- custom-error -->
+<!-- react-file-viewer -->
+
+<!-- yarn add react-preview-file -->
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
