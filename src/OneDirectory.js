@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 export default class OneDirectory extends Component {
     state = {
         fileObj: [],
-        path: '/'
+        path: '/',
+        display: 'none'
     }
 
    getData = async (path)=> {
@@ -36,8 +37,10 @@ export default class OneDirectory extends Component {
             alert("in OneDirectory : " + err);
         }
     }
-    getSubDir() {
-        console.log("button clicked")
+    getSubDir = () => {
+        console.log("button clicked:", this.state.display);
+        this.setState({display:'block'})
+        // element.removeAttribute("style")
     }
     componentDidMount() {
         this.setState({path:this.props.path},()=>{this.getData(this.props.path);})
@@ -58,13 +61,21 @@ export default class OneDirectory extends Component {
         return(
             <div> 
                 {/* {elem[1].fullpath} */}
-                {fileArr.map((elem, i) => (  
-                    <div key={i} style = {elem[1].isDir ? styles.itemDir :styles.itemFile}>
-                        <button style = {elem[1].isDir ? styles.iconVis: styles.iconHid}><FontAwesomeIcon icon="folder" 
-                            onClick={this.getSubDir} /> </button> 
-                        {elem[0]} 
-                    </div> 
-                ))}
+                {fileArr.map((elem, i) => {
+                    return (  
+                        <div key={i} >
+                            <div style = {elem[1].isDir ? styles.itemDir :styles.itemFile}>
+                                <button style = {elem[1].isDir ? styles.iconVis: styles.iconHid}><FontAwesomeIcon icon="folder" 
+                                    onClick={this.getSubDir} /> </button> 
+                                {elem[0]} 
+                            </div> 
+                            <div id = "subDir" style = {{...styles.subDir , ...{display:this.state.display}}}>
+
+                            </div>
+                        </div>
+                    )
+                }
+                )}
             </div>
         );
     }
@@ -100,6 +111,14 @@ let styles = {
         width: '50%',
         minWidth: '200px',
 
+    },
+    subDir: {
+        height: '100px',
+        background: 'lightBlue',
+        margin: '10px 30px',
+    },
+    invisible: {
+        display: "none"
     }
       
 }
