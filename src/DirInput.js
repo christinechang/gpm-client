@@ -8,16 +8,15 @@
         this.setState({dirName: event.target.value});
     }
     handleSubmit = (event) => {
-        // alert('submitted:  ' + this.state.dirName);
         this.props.getInputText(this.state.dirName);       
         event.preventDefault();
     }
     render() {
         return(
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} style = {styles.onTop}>
                 <label style = {styles.title}>ROOT NODE:
                     <input id="pathName" type="text" value={this.state.value} style={styles.pathText} 
-                    onChange = {this.handleChange}/>
+                    onChange = {this.handleChange} autoComplete = "off" />
                 </label>
                 <input style= {styles.submitButt} type="submit"  value="Submit"/>
             </form>
@@ -38,5 +37,8 @@ let styles = {
         margin: 20,
         fontWeight: 'bold',
         fontSize: 20
+    },
+    onTop: {        
+        zIndex: 5       //helps with input text box 
     },
 }

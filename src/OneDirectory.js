@@ -14,7 +14,7 @@ export default class OneDirectory extends Component {
        const url = "http://localhost:3010/" + encodedUrl;
        console.log("in getData: URL: ",url);
         try{
-            let response = await   //get statement doesn't need any params
+            let response = await   
                 fetch(url, {
                     method: 'GET',
                     headers: {
@@ -38,22 +38,16 @@ export default class OneDirectory extends Component {
         }
     }
     getSubDir = () => {
-        console.log("button clicked:", this.state.display);
         this.setState({display:'block'})
-        // element.removeAttribute("style")
     }
     componentDidMount() {
         this.setState({path:this.props.path},()=>{this.getData(this.props.path);})
     }
-    componentWillReceiveProps() {
-        // console.log("=====componentWillReceiveProps",this.props.path);
-
+    componentWillReceiveProps() {   //handles changes in properties
         this.setState({path:this.props.path}, ()=> {
-            // console.log("componentWillReceiveProps: state:", this.state.path,"props = ",this.props.path);
             this.getData(this.props.path);
         })
     }
-
     render() {
         let {fileArr} = this.state;
         return(
@@ -67,6 +61,4 @@ export default class OneDirectory extends Component {
             </div>
         );
     }
-    
-    
 }

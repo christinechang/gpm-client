@@ -1,7 +1,11 @@
+gpm-client:
+
 npm packages used:
 
 fontAwesome
 
+tried using these to get file preview.  
+react-file-viewer is a component which is easily inserted into client - but didn't have time to get it to work. 
 <!-- sockjs-client -->
 <!-- custom-error -->
 <!-- react-file-viewer -->

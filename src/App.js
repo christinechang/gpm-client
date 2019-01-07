@@ -1,7 +1,6 @@
 import FileSystem from './FileSystem';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faFolder } from '@fortawesome/free-solid-svg-icons'
-import { faFile } from '@fortawesome/free-solid-svg-icons'
+import { faFolder,faFile } from '@fortawesome/free-solid-svg-icons'
 
 import React, { Component } from 'react';
 import {
@@ -23,7 +22,6 @@ export default class App extends Component {
       <Router>
         <div>
             <Route exact path = "/" component = {FileSystem}/>
-
         </div>
       </Router>
     );

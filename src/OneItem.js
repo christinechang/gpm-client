@@ -30,11 +30,12 @@ export default class OneItem extends Component {
         let disp = this.state.display === 'none'?'block':'none';
         this.setState({display:disp});
     }
-    onError(e) {
-        console.log(e, 'error in file-viewer');
-    }
+    // onError(e) {
+    //     console.log(e, 'error in file-viewer');
+    // }
     render() {
         let item = this.props.item;
+        // FOR FILE PREVIEW:
         // let filePrevuPath = new File(['someBase64'], (item.isDir ? '' : item.fullpath));
         let file = item.fullpath;
         let type = file.substr(file.lastIndexOf('.')+1);
@@ -60,6 +61,7 @@ export default class OneItem extends Component {
                     <div style = {{...styles.filePrevu , ...{display:this.state.display}}}>
                         {this.state.display === 'block' ?  
                             <h4>File Preview Here of {file} (type = .{type})</h4>
+                            //THIS IS WHERE FILE PREVIEW CODE GOES.  TRIED THESE but didn't have time to get to work
                             // <FilePreview file={filePrevuPath}>
                             //     {(preview) => <img src={preview} />}
                             // </FilePreview>
@@ -89,10 +91,10 @@ let styles = {
         margin: 0,
         marginLeft: 20
     },
-    buttHid: {
-        visibility: "hidden",
-        marginRight: "10px"
-    },
+    // buttHid: {
+    //     visibility: "hidden",
+    //     marginRight: "10px"
+    // },
     buttVis: {
         visibility: "visible",
         marginRight: "10px",
@@ -106,25 +108,14 @@ let styles = {
         color: '#bbb',
         margin: '0 1px 0 2px'
     },
-    title: {
-        margin: 20
-    },
-    pathText: {
-        width: '50%',
-        minWidth: '200px',
-    },
     subDir: {
         margin: '10px 60px',
         borderBottom: '1px solid #eee',
-        // borderRadius: 10
     },
     filePrevu: {
         margin: '10px 60px',
         height: 200,
         backgroundColor: "#ddd"
-    },
-    invisible: {
-        display: "none"
     },
     bottom: {
         paddingBottom: 3,
